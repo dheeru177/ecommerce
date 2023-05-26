@@ -28,6 +28,25 @@ public class Role {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+
+	public Role(String name) {
+		super();
+		this.name = name;
+		
+	}
+	
+
+	public Role() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Role(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
 
 	public String getName() {
 		return name;
