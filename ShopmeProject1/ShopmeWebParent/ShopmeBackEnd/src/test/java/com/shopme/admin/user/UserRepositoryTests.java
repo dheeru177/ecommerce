@@ -39,13 +39,15 @@ public class UserRepositoryTests {
 	@Test
 	public void testCreateNewUserWithTwoRole() {
 	
-		User userRavi = new User("ravi12@gmail.com","ravi2023","Ravi","Dubey");
+		User userRavi = new User("dheeru177@gmail.com","ravi2023","Ravi","Dubey");
 		
 		Role roleEditor = new Role(3);
 		Role roleAssistant = new Role(5);
+		Role roleAssistant1 = new Role(2);
 	
 		userRavi.addRole(roleEditor);
 		userRavi.addRole(roleAssistant);
+		userRavi.addRole(roleAssistant1);
 		
 		User savedUser = repo.save(userRavi);
 		
