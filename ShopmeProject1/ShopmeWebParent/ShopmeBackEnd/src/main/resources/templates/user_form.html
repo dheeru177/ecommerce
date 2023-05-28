@@ -5,7 +5,7 @@
 <meta http-equiv="Content-type" content = "text/html; charset=UTF-8 ">
 <meta name ="viewport" content = "width =device-width,initial-scale=1.0,minimum-scale=1.0">
  
-<title>Create New User </title>
+<title>[[${pageTitle}]]</title>
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -107,13 +107,14 @@
 </div>
 
 <div>
-<h1>Manage Users | Create New User</h1>
+<h1>Manage Users | [[${pageTitle}]]</h1>
 
 </div>
 
 <form th:action="@{/users/save}" method = "post" style="max-width:700px; margin:0 auto"
 
 th:object="${user}" onsubmit="return checkEmailUnique(this)">
+<input type="hidden" th:field="*{id}"/>
 <div class="border border-secondary rounded p-3">
 <div class="form-group row">
 
@@ -153,8 +154,11 @@ th:object="${user}" onsubmit="return checkEmailUnique(this)">
 <label class="col-sm-4 col-form-label" >Password</label>
 <div class="col-sm-8">
 
-<input type="password" class="form-control"  th:field="*{password}" required minlength="8" maxlength="20"/>
+<input th:if="${user.id == null}" type="password" class="form-control"  
+th:field="*{password}" required minlength="8" maxlength="20"/>
 
+<input th:if="${user.id != null}" type="password" class="form-control"  
+th:field="*{password}"  minlength="8" maxlength="20"/>
 </div>
 
 </div>
@@ -247,8 +251,9 @@ function checkEmailUnique(form){
 url = "[[@{/users/check_email}]]";	
 	
 userEmail = $("#email").val();
+userId = $("#id").val();
 csrfValue = $("input[name='_csrf']").val();
-params = {email: userEmail , _csrf : csrfValue};
+params = {id: userId , email: userEmail , _csrf : csrfValue};
 
 
 $.post(url, params, function(response){
