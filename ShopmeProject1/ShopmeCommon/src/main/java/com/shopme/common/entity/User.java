@@ -159,5 +159,15 @@ return "/user-photos/" + this.id + "/" + this.photos;
 	
 }
 
+@Transient
+public String getFullname()
+{
+	
+	return firstName + " " + lastName;
+	
+
+}
+
+
 }
 		
