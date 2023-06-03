@@ -7,13 +7,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+
 import org.hibernate.internal.build.AllowSysOut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 
 
 public class FileUploadUtil {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileUploadUtil.class);
 	
 	
 public static void saveFile(String uploadDir , String fileName , MultipartFile multiPartFile) throws IOException
@@ -72,8 +76,10 @@ public static void saveFile(String uploadDir , String fileName , MultipartFile m
 		Files.delete(file);
 		
 		}catch(IOException ex) {
+		
+			LOGGER.error("Could not delete file : " + file);
 			
-        System.out.println("Could not delete file : " + file);
+//        System.out.println("Could not delete file : " + file);
 			
 		}
 	}
@@ -83,8 +89,8 @@ public static void saveFile(String uploadDir , String fileName , MultipartFile m
 	});  
   }catch(IOException ex2)
 	{
-		
-	    System.out.println("Could not delete file : " + dirPath);
+	  LOGGER.error("Could not delete file : " + dirPath);
+//	    System.out.println("Could not delete file : " + dirPath);
 	}
   }
 	 
