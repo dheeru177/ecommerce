@@ -21,6 +21,13 @@ public List<Category> listAll(){
 return (List<Category>) repo.findAll();
 	
 }
+
+public Category save(Category category)
+{
+	
+return repo.save(category);
+
+}
 	
 public List<Category> listCategoriesUsedInForm()
 {
@@ -35,7 +42,7 @@ for(Category category : categoriesInDB)
 	if(category.getParent() == null)
 	{
 		
-         categoriesUsedInForm.add(new Category(category.getName()));
+         categoriesUsedInForm.add(Category.copyIdAndName(category));
 	
 	Set<Category> children = category.getChildren();
 	
@@ -44,7 +51,7 @@ for(Category category : categoriesInDB)
 		
 	String name =  "--" + subCategory.getName();	
 	
-    categoriesUsedInForm.add(new Category(name));
+    categoriesUsedInForm.add(category.copyIdAndName(subCategory.getId(), name));
 	
   listChildren(categoriesUsedInForm,subCategory,1);
 	}
@@ -76,9 +83,12 @@ private void listChildren(List<Category> categoriesUsedInForm , Category parent 
 	
 	name += subCategory.getName();	
 		
-    categoriesUsedInForm.add(new Category(name));
+    categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
     listChildren(categoriesUsedInForm,subCategory, newSubLevel);
 	}
 }
+
+
+
 
 }

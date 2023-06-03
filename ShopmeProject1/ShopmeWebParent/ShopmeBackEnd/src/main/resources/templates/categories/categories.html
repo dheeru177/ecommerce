@@ -15,7 +15,8 @@
 				class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 
 		</div>
-
+<div th:if="${message != null}"
+			class="alert alert-success text-center">[[${message}]]</div>
 		<div>
 			<form th:action="@{/categories/page/1}" class="form-inline m-3">
 				Filter:&nbsp; <input type="search" name="keyword"
@@ -44,7 +45,7 @@
 						<th>Category Name</th>
 						<th>Alias</th>
 						<th>Enabled</th>
-						<th></th>0
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,13 +54,8 @@
 						<td></td>
 						<td th:text="${cat.name}"></td>
 						<td th:text="${cat.alias}"></td>
-						<td><a class="fas fa-check-circle fa-2x icon-green"
-							style="color: green"></a></td>
-						<td><a class="fas fa-edit fa-2x icon-green"
-							title="Edit this user" style="color: green"></a>
-							 <a
-							class="fas fa-trash fa-2x icon-dark link-delete"
-							title="Delete this user"></a></td>
+												
+					
 					</tr>
 				</tbody>
 			</table>

@@ -99,7 +99,8 @@
 						<a th:if="${user.enabled == true}"
 							class="fas fa-check-circle fa-2x icon-green"
 							th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-							title="Disable this user"></a> <a
+							title="Disable this user"></a>
+							 <a
 							th:if="${user.enabled == false}"
 							class="fas fa-circle fa-2x icon-dark"
 							th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
