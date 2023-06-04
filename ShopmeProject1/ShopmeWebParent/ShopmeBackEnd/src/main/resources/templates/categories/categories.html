@@ -51,10 +51,31 @@
 				<tbody>
 					<tr th:each="cat : ${listCategories}">
 						<td th:text="${cat.id}"></td>
-						<td></td>
+						<td>
+						
+						<img th:src = "@{${cat.imagePath}}"  style="width:100px" class="img-fluid" />
+						
+						</td>
 						<td th:text="${cat.name}"></td>
 						<td th:text="${cat.alias}"></td>
-												
+							<td>
+						<a th:if="${cat.enabled == true}"
+							class="fas fa-check-circle fa-2x icon-green"
+							th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"
+							title="Disable this user"></a>   
+							 <a
+							th:if="${cat.enabled == false}"
+							class="fas fa-circle fa-2x icon-dark"
+							th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}"
+							title="Enabled this user"></a>
+							</td>
+						<td>
+						<a class="fas fa-edit fa-2x icon-green"
+							th:href="@{'/categories/edit/' + ${cat.id}}" title="Edit this user"></a>
+							&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
+							th:href="@{'/categories/delete/' + ${cat.id}} "
+							th:userId="${cat.id}" title="Delete this user"></a>
+							</td>						
 					
 					</tr>
 				</tbody>

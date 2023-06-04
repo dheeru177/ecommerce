@@ -57,22 +57,83 @@ public String newCategory(Model model)
 @PostMapping("/categories/save")
 public String saveCategory(Category category , @RequestParam("fileImage") MultipartFile multipartFile , RedirectAttributes ra) throws IOException
 {
+	if(!multipartFile.isEmpty())
+	{
 	
 String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 category.setImage(fileName);
 
 Category savedCategory  = service.save(category);
 
-String uploadDir = "../category-images" + savedCategory.getId();
+String uploadDir = "../category-images/" + savedCategory.getId();
 FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-ra.addFlashAttribute("message","The category has been saved successfully");
+
+	}else
+	{
+		
+	if(category.getImage().isEmpty())
+	{
+		
+		category.setImage("default.png");
+		
+	}
+	service.save(category);
+	}
+	ra.addFlashAttribute("message","The category has been saved successfully");
+	return "redirect:/categories";
+}
+
+
+@GetMapping("/categories/edit/{id}")
+public String editCategory(@PathVariable(name = "id") Integer id , Model model , RedirectAttributes rs)
+{
+	
+try {
+	
+	Category category   =service.get(id);
+	
+	List<Category> listCategories = service.listCategoriesUsedInForm();
+	
+model.addAttribute("category" , category);
+model.addAttribute("listCategories",listCategories);
+model.addAttribute("pageTitle","Edit Category (ID:" + id + ")");
+
+return "categories/category_form";
+}
+catch (CategoryNotFoundException ex) {
+
+rs.addFlashAttribute("message" , ex.getMessage());
 return "redirect:/categories";
+	
+}
+
 
 }
 
 
+@GetMapping("/categories/{id}/enabled/{status}")
+public String updateUserEnabledStatus(@PathVariable("id") Integer id , 
+		@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+	
+	service.updateCategoryEnabledStatus(id, enabled);
+	String status = enabled ? "enabled" : "disabled";
+	String message = "The categories ID" + id + "has been " + status ;
+	redirectAttributes.addFlashAttribute("message" , message);
+	return "redirect:/categories";
+	
+}
 
+@GetMapping("/categories/delete/{id}")
+public String deleteUser(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+    try {
+        service.delete(id);
+        redirectAttributes.addFlashAttribute("message", "The category ID " + id + " has been deleted successfully");
+    } catch (CategoryNotFoundException e) {
+        redirectAttributes.addFlashAttribute("message", e.getMessage());
+    }
+    return "redirect:/categories";
+}
 
 
 }

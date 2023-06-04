@@ -119,4 +119,48 @@ Category savedCategory = repo.save(category);
 		printChildren(subCategory, newSubLevel);
 		}
 	}
+	
+	@Test
+	public void testListRootCategories()
+	{
+		
+	List<Category> listRootCategories = repo.findRootCategories();	
+	listRootCategories.forEach(cat -> System.out.println(cat.getName()));
+	
+		
+	}
+	
+	
+	@Test
+	public void testFindByname()
+	{
+		
+	String name = "_Computers";
+	
+	Category category = repo.findByName(name);
+	
+	
+	assertThat(category).isNotNull();
+	
+	assertThat(category.getName()).isEqualTo(name);
+	
+	
+		
+		
+	}
+	
+	@Test
+	public void testFindByAlias() {
+		
+		
+	String alias = "Electronics";
+	Category category = repo.findByAlias(alias);
+	
+	assertThat(category).isNotNull();
+	assertThat(category.getAlias()).isEqualTo(alias);
+		
+	}
+	
+	
+	
 }
